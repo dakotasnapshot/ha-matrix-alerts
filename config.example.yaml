@@ -1,0 +1,71 @@
+# HA-Matrix-Alerts Configuration
+# Copy this file to config.yaml and edit for your setup.
+
+# Home Assistant connection
+homeassistant:
+  url: "https://homeassistant.local:8123"
+  token: "your_long_lived_access_token_here"    # HA → Profile → Long-Lived Access Tokens
+  verify_ssl: false                               # Set true if using valid SSL cert
+
+# Matrix connection
+matrix:
+  homeserver: "https://matrix.example.com"
+  bot_user_id: "@alerts:matrix.example.com"
+  access_token: "syt_your_token_here"
+
+# Matrix rooms to send alerts to
+# If using meshtastic-matrix-bridge, add the bridged room here
+# and alerts will automatically propagate to the mesh network
+rooms:
+  - "!your_room_id:matrix.example.com"
+  # - "!meshtastic_room:matrix.example.com"    # Bridge room → mesh delivery
+
+# Alert configuration
+alerts:
+  # Home Assistant entity for NWS alerts
+  # Common entities:
+  #   sensor.nws_alerts               — NWS integration alert count
+  #   sensor.weatheralerts            — weatheralerts custom component
+  #   sensor.nws_alerts_your_county   — county-specific
+  nws_entity: "sensor.nws_alerts"
+
+  # How often to check for new alerts (seconds)
+  poll_interval: 60
+
+  # Minimum severity to forward (minor, moderate, severe, extreme)
+  min_severity: "moderate"
+
+  # Include watches (less urgent than warnings)?
+  include_watches: true
+
+  # Include advisories (least urgent)?
+  include_advisories: false
+
+  # Don't re-send the same alert within this many hours
+  dedup_hours: 24
+
+  # Minimum seconds between any two alert messages (prevent flooding)
+  rate_limit_seconds: 30
+
+  # Mesh-friendly format (short messages under 200 chars)
+  # Set true if alerts will be relayed to Meshtastic via bridge
+  # Set false for full Matrix-formatted alerts with descriptions
+  mesh_friendly: true
+
+# Custom sensor monitoring (optional)
+# Monitor any HA sensor and alert when thresholds are crossed
+# custom_sensors:
+#   - entity_id: "sensor.outdoor_temperature"
+#     name: "Outdoor Temp"
+#     threshold: 100
+#     condition: "above"     # above, below, or equals
+#
+#   - entity_id: "sensor.wind_speed"
+#     name: "Wind Speed"
+#     threshold: 50
+#     condition: "above"
+#
+#   - entity_id: "sensor.battery_soc"
+#     name: "Battery SOC"
+#     threshold: 10
+#     condition: "below"

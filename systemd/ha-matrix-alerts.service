@@ -1,0 +1,22 @@
+[Unit]
+Description=HA-Matrix-Alerts — Home Assistant Weather/EAS Alert Bridge
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=alerts
+WorkingDirectory=/opt/ha-matrix-alerts
+
+ExecStart=/opt/ha-matrix-alerts/venv/bin/python /opt/ha-matrix-alerts/ha_matrix_alerts.py
+
+Restart=always
+RestartSec=10
+
+Environment=PYTHONUNBUFFERED=1
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
