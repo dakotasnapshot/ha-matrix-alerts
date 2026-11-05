@@ -1,5 +1,7 @@
 # 🚨 HA-Matrix-Alerts — Home Assistant Weather/EAS Bridge
 
+Maintained personally by [Dakota Cole (@dakotasnapshot)](https://github.com/dakotasnapshot).
+
 Monitors [Home Assistant](https://www.home-assistant.io/) for weather alerts and emergency notifications (NWS, EAS), then forwards them to [Matrix](https://matrix.org/) rooms. When paired with a [Meshtastic bridge](https://github.com/dakotasnapshot/meshtastic-matrix-bridge), alerts propagate to mesh radios automatically — **full EAS over Meshtastic**.
 
 No API keys needed (uses your existing HA setup).
